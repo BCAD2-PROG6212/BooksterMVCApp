@@ -1,0 +1,61 @@
+﻿@model IEnumerable<BooksterMVCApp.ViewModels.CartViewModel>
+
+@{
+    ViewData["Title"] = "Cart";
+}
+
+<h1>Cart</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.bookId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Qty)
+            </th>
+            <th>Total</th>            
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            double orderTotal = 0;
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.bookId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Qty)
+                </td>
+                <td>@{
+                        var total = (double) item.Price * @item.Qty;
+                        orderTotal = orderTotal + (double) total;
+                    } 
+                    R @total
+                </td>
+            </tr>
+        }
+        <tr>
+            <td colspan="4"><b>Order Total</b></td>
+            <td>
+                <b>R @orderTotal</b>
+            </td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<BooksterMVCApp.Models.Book>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<form asp-action="Index">
+    <div class="form-group">
+        <label class="control-label">Search</label>
+        <input name="searchTerm" class="form-control" />        
+    </div>
+    
+    <div class="form-group">
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.BookName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookAuthor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookRating)
+            </th>
+            <th>Quantity</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookAuthor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BookRating)
+            </td>
+            <form asp-action="AddToCart">
+                <td>
+                    <input name="qty" type="number" min="0" max="20" step="1" class="form-control" />
+                </td>
+                <td>
+                    <input name="bookId" type="hidden" value="@item.BookId" />
+                    <input type="submit" value="Add to Cart" class="btn btn-primary" />
+                
+                </td>
+            </form>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.BookId">Details</a>                
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>
