@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BooksterMVCApp.ViewModels.CartViewModel>
+﻿@model BooksterMVCApp.ViewModels.CheckoutViewModel
 
 @{
     ViewData["Title"] = "Cart";
@@ -6,29 +6,43 @@
 
 <h1>Cart</h1>
 
+<h3>Delivery Details</h3>
+<p>
+    @Model.CustomerName @Model.CustomerSurname <br />
+    @Model.AddressLineOne <br />
+    @Model.AddressLineTwo <br />
+    @Model.City <br />
+    @Model.PostCode <br />
+</p>
+<h3>Customer Contact</h3>
+<p>
+    @Model.CustomerName @Model.CustomerSurname <br />
+    @Model.CustomerPhone <br />
+    @Model.CustomerEmail <br />
+</p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.bookId)
+                Book ID
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.BookName)
+                Book Name
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                Book Price
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Qty)
+                Book Qty
             </th>
-            <th>Total</th>            
+            <th>Total</th>
         </tr>
     </thead>
     <tbody>
         @{
             double orderTotal = 0;
         }
-        @foreach (var item in Model)
+        @foreach (var item in Model.cart)
         {
             <tr>
                 <td>
@@ -43,10 +57,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Qty)
                 </td>
-                <td>@{
-                        var total = (double) item.Price * @item.Qty;
-                        orderTotal = orderTotal + (double) total;
-                    } 
+                <td>
+                    @{
+                        var total = (double)item.Price * @item.Qty;
+                        orderTotal = orderTotal + (double)total;
+                    }
                     R @total
                 </td>
             </tr>
@@ -60,8 +75,9 @@
     </tbody>
 
 </table>
-<form asp-action="Checkout">
+
+<form asp-action="ConfirmOrder">
     <input name="CurrentUser" type="hidden" value="eadam@vc.co.za" />
     <input name="OrderTotal" type="hidden" value="@orderTotal" />
-    <input type="submit" value="Checkout" class="btn btn-primary" />
+    <input type="submit" value="ConfirmOrder" class="btn btn-primary" />
 </form>
