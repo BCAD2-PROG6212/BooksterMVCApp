@@ -71,6 +71,7 @@ namespace BooksterMVCApp.Controllers
             }
 
             _context.SaveChanges();
+            CartUtil.cart.Clear();
             return View();
         }
     }
